@@ -23,10 +23,12 @@
     "npm": ">= 3.0.0"
   },
   "scripts": {
-    "test": "npm run compile && npm run jest",
+    "test": "npm run compile && npm run coverage",
     "dev": "ts-node-dev --no-notify src/",
     "start": "npm run compile && node lib/",
-    "jest": "jest  --forceExit",
+    "clean": "shx rm -rf test/data/",
+    "coverage": "npm run clean & SET NODE_ENV=test& nyc mocha",
+    "mocha": "npm run clean & SET NODE_ENV=test & mocha test/ --recursive --exit",
     "compile": "shx rm -rf lib/ && tsc"
   },
   "types": "lib/",
@@ -48,6 +50,7 @@
     "winston": "^3.2.1"
   },
   "devDependencies": {
+    "@istanbuljs/nyc-config-typescript": "^0.1.3",
     "@types/compression": "^1.0.1",
     "@types/cors": "^2.8.6",
     "@types/helmet": "0.0.45",
@@ -57,7 +60,9 @@
     "@types/serve-favicon": "^2.5.0",
     "axios": "^0.19.0",
     "jest": "^24.9.0",
+    "mocha": "^6.2.2",
     "nodemon": "^1.19.4",
+    "nyc": "^14.1.1",
     "shx": "^0.3.2",
     "ts-jest": "^24.2.0",
     "ts-node-dev": "^1.0.0-pre.44",
